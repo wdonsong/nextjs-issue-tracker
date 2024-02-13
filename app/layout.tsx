@@ -1,11 +1,18 @@
 import "@radix-ui/themes/styles.css";
+import "./theme-config.css";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Container, Theme, ThemePanel } from "@radix-ui/themes";
 import Navbar from "./Navbar";
-import { Theme } from "@radix-ui/themes";
 
-const inter = Inter({ subsets: ["latin"] });
+// import AuthProvider from "./auth/Provider";
+// import QueryClientProvider from "./QueryClientProvider";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,14 +26,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Theme>
+      <body className={inter.variable}>
+        {/* <QueryClientProvider> */}
+        {/* <AuthProvider> */}
+        <Theme accentColor="violet">
+          <Navbar />
           <main className="p-5">
-            {" "}
-            <Navbar />
-            {children}
+            <Container>{children}</Container>
           </main>
         </Theme>
+        {/* </AuthProvider> */}
+        {/* </QueryClientProvider> */}
       </body>
     </html>
   );
