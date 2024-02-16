@@ -8,13 +8,13 @@ import { useForm, Controller, set } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createIssueSchema } from "../../validationSchemas";
+import { issueSchema } from "../../validationSchemas";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
 import { Issue } from "@prisma/client";
 
-type IssueFormData = z.infer<typeof createIssueSchema>;
+type IssueFormData = z.infer<typeof issueSchema>;
 
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
@@ -30,7 +30,7 @@ const IssueForm = ({ issue }: Props) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema),
+    resolver: zodResolver(issueSchema),
   });
   const router = useRouter();
   const [error, setError] = useState("");
@@ -65,9 +65,11 @@ const IssueForm = ({ issue }: Props) => {
         <Controller
           name="desc"
           control={control}
-          render={({ field }) => <SimpleMDE {...field} />}
           defaultValue={issue?.description}
-        ></Controller>
+          render={({ field, ref }) => (
+            <SimpleMDE placeholder="Description" {...field} ref={ref} />
+          )}
+        />
 
         <Button disabled={isSubmitting} type="submit">
           Submit New Issue
