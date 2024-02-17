@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { issueSchema } from "../../../validationSchemas";
 import prisma from "@/prisma/client";
+import { getServerSession } from "next-auth";
+import { NextAuthConfig } from "../../auth/[...nextauth]/route";
 
 interface Props {
   params: {
@@ -8,6 +10,10 @@ interface Props {
   };
 }
 export async function PATCH(request: NextRequest, { params }: Props) {
+  const session = await getServerSession(NextAuthConfig);
+  if (!session) {
+    return NextResponse.json({ error: "Not authorized" }, { status: 401 });
+  }
   const body = await request.json();
   const validation = issueSchema.safeParse(body);
   if (!validation.success) {
@@ -52,6 +58,10 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession(NextAuthConfig);
+  if (!session) {
+    return NextResponse.json({ error: "Not authorized" }, { status: 401 });
+  }
   const id = parseInt(params.id);
   if (typeof id !== "number") {
     return NextResponse.json({ error: "Invalid id" }, { status: 400 });
