@@ -25,10 +25,10 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   return (
     <>
       <Select.Root
-        defaultValue={issue.assignedToUserId || ""}
+        defaultValue={issue.assignedToUserId! || ""}
         onValueChange={onValueChangte}
       >
-        <Select.Trigger placeholder="Pick a fruit" />
+        <Select.Trigger />
         <Select.Content>
           <Select.Group>
             <Select.Label>suggestion</Select.Label>

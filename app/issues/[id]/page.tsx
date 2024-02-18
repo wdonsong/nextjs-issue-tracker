@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
 import DeleteIssueButton from "./DeleteIssueButton";
-import { NextAuthConfig } from "@/app/api/auth/[...nextauth]/route";
+import { NextAuthConfig } from "@/app/api/auth/[...nextauth]/NextAuthConfig";
 import { getServerSession } from "next-auth";
 import AssigneeSelect from "../AssigneeSelect";
 import { Metadata } from "next";
